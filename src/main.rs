@@ -12,6 +12,7 @@ fn process_directory(dir:String, diff:u64) -> io::Result<()>{
                 let is_dir = metadata.is_dir();
                 let difference = a.elapsed().expect("Clock Error");
                 if difference.as_secs() > diff{
+                    println!("DELETING: {}",path.to_string_lossy());
                     if is_dir {
                         fs::remove_dir_all(path)?;
                     }
@@ -44,8 +45,6 @@ fn main() {
         return;
     }
     
-
-
     let target_dir = &args[1];
     let quantifier = &args[2];
     let interval = &args[3];
@@ -62,6 +61,8 @@ fn main() {
         "hour" | "hours" => 60 * 60,
         "day" | "days" => 60 * 60 * 24,
         "week" | "weeks" => 60 * 60 * 24 * 7,
+        "month" | "months" => 60 * 60 * 24 * 7 * 30,
+        "year" | "years" => 60 * 60 * 24 * 7 * 365,
         a => {
             println!("Unrecognized interval \"{}\". Must be one of \"minutes, hours, days or weeks\"",a);
             return;
