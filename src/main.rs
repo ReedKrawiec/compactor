@@ -1,8 +1,6 @@
 use std::env;
 use std::fs;
 use std::io;
-use std::time::SystemTime;
-
 
 fn process_directory(dir:String, diff:u64) -> io::Result<()>{
     for entry in fs::read_dir(dir)?{
@@ -70,7 +68,6 @@ fn main() {
         }
     };
     let diff = diff * quantifier;
-    println!("{}", diff);
     match process_directory(target_dir.to_string(), diff){
         Ok(_) => {},
         Err(a) => println!("{}",a)
